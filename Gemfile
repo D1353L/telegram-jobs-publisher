@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+ruby '2.7.1'
+
+gem 'telegram-bot'
+gem 'thin'
+
+gem 'resque'
+gem 'resque-scheduler'
+
+gem 'pry-byebug'
+gem 'require_all'
+gem 'dotenv'
