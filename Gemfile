@@ -10,6 +10,6 @@ gem 'thin'
 gem 'resque'
 gem 'resque-scheduler'
 
+gem 'dotenv'
 gem 'pry-byebug'
 gem 'require_all'
-gem 'dotenv'

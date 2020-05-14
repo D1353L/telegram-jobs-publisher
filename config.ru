@@ -1,24 +1,21 @@
+# frozen_string_literal: true
+
 require 'pry'
+require 'logger'
 require 'dotenv/load'
 require 'telegram/bot'
 require 'require_all'
 require_all 'app'
+require_all 'config'
+require_all 'lib'
 
-file = File.new("telegram_jobs_publisher.log", 'a+')
-file.sync = true
-use Rack::CommonLogger, file
+ApplicationInitializer.perform
 
-Telegram.bots_config = {
-  default: {
-    token: ENV['API_KEY'],
-    whitelist: ENV['WHITELIST']
-  }
-}
-
-if Telegram.bot.get_webhook_info.dig('result', 'url') != ENV['WEBHOOK_URL']
-  Telegram.bot.set_webhook(url: ENV['WEBHOOK_URL'])
+app = Rack::Builder.new do
+  use LoggingMiddleware, Telegram.logger
+  map '/telegram' do
+    run Telegram::Bot::Middleware.new(Telegram.bot, CommandsController)
+  end
 end
 
-map "/telegram" do
-  run Telegram::Bot::Middleware.new(Telegram.bot, CommandsController)
-end
+CustomThinHandler.run app

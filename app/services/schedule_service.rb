@@ -1,5 +1,6 @@
-class ScheduleService
+# frozen_string_literal: true
 
+class ScheduleService
   class << self
     def schedule!(every)
       # name = 'send_message_job'
@@ -21,7 +22,6 @@ class ScheduleService
 
     private
 
-    def formatter
-    end
+    def formatter; end
   end
 end

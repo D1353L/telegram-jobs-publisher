@@ -1,8 +1,23 @@
-class ApplicationController < Telegram::Bot::UpdatesController
-  before_action :authenticate_request
+# frozen_string_literal: true
 
-  def authenticate_request
+class ApplicationController < Telegram::Bot::UpdatesController
+  before_action :log_incomming_message, :authorize
+
+  private
+
+  def authorize
     whitelist = Telegram.bots_config.dig(:default, :whitelist)&.split(',')
-    raise Telegram::Bot::Error unless whitelist && whitelist.include?(from['id'].to_s)
+    return if !whitelist || whitelist.include?(from[:id].to_s)
+
+    Telegram.logger.debug 'Access denied'
+    raise Telegram::Bot::Forbidden
+  end
+
+  def log_incomming_message
+    Telegram.logger.debug "Incoming message: text=#{payload[:text]}. "\
+                          "From: id=#{from[:id]} "\
+                          "first_name=#{from[:first_name]} "\
+                          "last_name=#{from[:last_name]} "\
+                          "username=#{from[:username]}"
   end
 end
