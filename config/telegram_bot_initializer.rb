@@ -1,32 +1,38 @@
 # frozen_string_literal: true
 
-class ApplicationInitializer
+class TelegramBotInitializer
   class << self
+    PROGNAME = 'TelegramJobsPublisher'
+
     def perform
+      set_up_bot_config
+      connect_loggers
+      set_webhook
+    end
+
+    def set_up_bot_config
       Telegram.bots_config = {
         default: {
           token: ENV['API_KEY'],
           whitelist: ENV['WHITELIST']
         }
       }
-
-      connect_loggers
-      set_webhook
-
-      Telegram.logger.info 'Server is started'
     end
-
-    private
 
     def connect_loggers
       logger = Telegram::JobsPublisher::LoggersPool.new(
-        stdout_logger: stdout_logger,
-        file_logger: file_logger,
-        chat_logger: chat_logger
+        loggers: {
+          stdout_logger: Logger.new($stdout),
+          file_logger: file_logger,
+          chat_logger: chat_logger
+        },
+        progname: PROGNAME
       )
       Telegram.instance_variable_set('@logger', logger)
       Telegram.class.send(:attr_reader, 'logger')
     end
+
+    private
 
     def set_webhook
       if Telegram.bot.get_webhook_info.dig('result', 'url') == ENV['WEBHOOK_URL']
@@ -34,10 +40,6 @@ class ApplicationInitializer
       end
 
       Telegram.bot.set_webhook(url: ENV['WEBHOOK_URL'])
-    end
-
-    def stdout_logger
-      Telegram::JobsPublisher::AppLogger.new($stdout)
     end
 
     def file_logger

@@ -2,12 +2,14 @@
 
 module Telegram
   module JobsPublisher
-    class ChatLogger < AppLogger
+    class ChatLogger < Logger
       LOG_LEVELS = {
         info: 0,
         error: 1,
         debug: 2
       }.freeze
+
+      attr_accessor :progname
 
       def initialize(chat_id:, log_level: :info, message_sender: nil)
         @chat_id = chat_id
@@ -61,7 +63,7 @@ module Telegram
       end
 
       def format_msg(severity, msg)
-        format_message(format_severity(severity), Time.now, progname, msg)
+        format_message(format_severity(severity), Time.now, @progname, msg)
       end
     end
   end

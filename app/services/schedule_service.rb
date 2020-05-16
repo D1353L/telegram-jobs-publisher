@@ -1,27 +1,35 @@
 # frozen_string_literal: true
 
 class ScheduleService
+  SCHEDULE_NAME = 'publish_job'
+
   class << self
     def schedule!(every)
-      # name = 'send_message_job'
-      # config = {}
-      # config[:class] = 'SendMessageJob'
-      # config[:args] = formatter
-      # config[:every] = every
-      # config[:persist] = true
-      # Resque.set_schedule(name, config)
+      Resque.set_schedule(
+        SCHEDULE_NAME,
+        {
+          class: PublishJob.to_s,
+          args: api_client.to_s,
+          every: every,
+          persist: true
+        }
+      )
     end
 
     def reset!
-      # Resque.remove_schedule('send_message_job')
+      Resque.remove_schedule(SCHEDULE_NAME)
     end
 
     def status
-      'status'
+      return 'No jobs scheduled' if Resque.schedule.empty?
+
+      "Job scheduled every #{Resque.schedule.dig(SCHEDULE_NAME, 'every')}"
     end
 
     private
 
-    def formatter; end
+    def api_client
+      APIClient::HhRu
+    end
   end
 end

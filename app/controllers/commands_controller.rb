@@ -9,16 +9,16 @@ class CommandsController < ApplicationController
     return unless every
 
     ScheduleService.schedule! every
-    respond_with :message, text: "Scheduled every #{every}"
+    respond_with_status_info
   end
 
   def status!(*)
-    respond_with :message, text: ScheduleService.status
+    respond_with_status_info
   end
 
   def reset!(*)
     ScheduleService.reset!
-    respond_with :message, text: 'Schedule reset successfully'
+    respond_with_status_info
   end
 
   def log_level!(*params)
@@ -35,6 +35,10 @@ class CommandsController < ApplicationController
   end
 
   private
+
+  def respond_with_status_info
+    respond_with :message, text: ScheduleService.status
+  end
 
   def schedule_params(params)
     unless params.size == 1 && params.first.match(SCHEDULE_PARAM_PATTERN)

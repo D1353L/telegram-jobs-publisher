@@ -7,6 +7,7 @@ ruby '2.7.1'
 gem 'telegram-bot'
 gem 'thin'
 
+gem 'rake'
 gem 'resque'
 gem 'resque-scheduler'
 

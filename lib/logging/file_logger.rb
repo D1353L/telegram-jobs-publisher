@@ -4,7 +4,7 @@ require 'fileutils'
 
 module Telegram
   module JobsPublisher
-    class FileLogger < AppLogger
+    class FileLogger < Logger
       def initialize(path)
         dir = File.dirname(path)
         FileUtils.mkdir_p(dir) unless File.directory?(dir)

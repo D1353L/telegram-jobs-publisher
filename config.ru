@@ -9,7 +9,10 @@ require_all 'app'
 require_all 'config'
 require_all 'lib'
 
-ApplicationInitializer.perform
+TelegramBotInitializer.perform
+
+Telegram.logger.info 'Server is started'
+Telegram.logger.info ScheduleService.status
 
 app = Rack::Builder.new do
   use LoggingMiddleware, Telegram.logger
