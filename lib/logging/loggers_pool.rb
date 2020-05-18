@@ -10,7 +10,7 @@ module Telegram
         @loggers.each_value { |logger| logger.progname ||= @progname }
       end
 
-      %i[info debug error].each do |method_name|
+      %i[info debug error warn].each do |method_name|
         define_method(method_name) do |*args, &block|
           @loggers.each_value { |logger| logger.send(method_name, *args, &block) }
         end

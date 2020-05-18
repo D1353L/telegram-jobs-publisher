@@ -1,5 +1,3 @@
 bot: ruby config.ru
 
-worker: bundle exec rake resque:work
-
-scheduler: bundle exec rake resque:scheduler
+worker: bundle exec sidekiq -r ./config/sidekiq_boot.rb

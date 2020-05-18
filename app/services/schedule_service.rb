@@ -1,29 +1,32 @@
 # frozen_string_literal: true
 
 class ScheduleService
-  SCHEDULE_NAME = 'publish_job'
+  SCHEDULE_NAME = 'jobs_publisher'
 
   class << self
     def schedule!(every)
-      Resque.set_schedule(
+      Sidekiq.set_schedule(
         SCHEDULE_NAME,
         {
-          class: PublishJob.to_s,
+          class: PublishWorker.to_s,
           args: api_client.to_s,
-          every: every,
-          persist: true
+          every: every
         }
       )
     end
 
     def reset!
-      Resque.remove_schedule(SCHEDULE_NAME)
+      Sidekiq.remove_schedule(SCHEDULE_NAME)
+      Sidekiq::ScheduledSet.new.clear
+      Sidekiq::Queue.all.each(&:clear)
+      Sidekiq::RetrySet.new.clear
     end
 
     def status
-      return 'No jobs scheduled' if Resque.schedule.empty?
+      schedule = Sidekiq.get_schedule(SCHEDULE_NAME)
+      return 'No jobs scheduled' unless schedule
 
-      "Job scheduled every #{Resque.schedule.dig(SCHEDULE_NAME, 'every')}"
+      "Job scheduled every #{schedule['every']}"
     end
 
     private
