@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommandsController < ApplicationController
-  SCHEDULE_PARAM_PATTERN = /^\d*\.?\d*(m|h)?$/.freeze
+  SCHEDULE_PARAM_PATTERN = /^\d*\.?\d*(m|h)$/.freeze
   ACCEPTED_LOG_LEVEL_VALUES = %w[info error debug].freeze
 
   def schedule!(*params)
