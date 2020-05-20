@@ -4,6 +4,14 @@ class CommandsController < ApplicationController
   SCHEDULE_PARAM_PATTERN = /^\d*\.?\d*(m|h)$/.freeze
   ACCEPTED_LOG_LEVEL_VALUES = %w[info error debug].freeze
 
+  def publish!(*)
+    message = APIClient::HhRu.create_job_ad!
+    return unless message
+
+    TelegramBotDecorator.publish_to_channel(text: message)
+    respond_with(:message, text: 'New job published')
+  end
+
   def schedule!(*params)
     every = params.any? ? schedule_params(params)[:every] : ENV['DEFAULT_SCHEDULE_VALUE']
     return unless every

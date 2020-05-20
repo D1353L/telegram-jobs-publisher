@@ -9,7 +9,7 @@ class LoggingMiddleware
   def call(env)
     @app.call(env)
   rescue StandardError => e
-    @logger.error e.inspect
+    @logger.error "#{e.inspect} #{e.backtrace.first}"
     [200, { 'Content-Type' => 'text/plain' }, ['OK']]
   end
 end
