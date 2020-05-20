@@ -7,14 +7,6 @@ module APIClient
     include ::HTTParty
     base_uri 'api.hh.ru'
 
-    REQUEST_PARAMS = {
-      order_by: 'publication_time',
-      schedule: 'remote',
-      period: 1,
-      page: 1,
-      per_page: 1
-    }.freeze
-
     CURRENCIES = {
       'RUR' => 'руб.',
       'BYN' => 'бел. руб.',
@@ -25,7 +17,8 @@ module APIClient
 
     class << self
       def create_job_ad!
-        vacancy_id = vacancies(REQUEST_PARAMS)&.first&.dig('id')
+        query_params = JSON.parse(ENV['HH_RU_VACANCIES_PARAMS'])
+        vacancy_id = vacancies(query_params)&.first&.dig('id')
         return nil unless vacancy_id
 
         @payload = vacancy(vacancy_id)
