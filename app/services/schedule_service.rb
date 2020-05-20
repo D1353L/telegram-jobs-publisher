@@ -24,9 +24,9 @@ class ScheduleService
 
     def status
       schedule = Sidekiq.get_schedule(SCHEDULE_NAME)
-      return 'No jobs scheduled' unless schedule
+      return 'Worker is not scheduled' unless schedule
 
-      "Job scheduled every #{schedule['every']}"
+      "Worker scheduled every #{schedule['every']}"
     end
 
     private

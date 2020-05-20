@@ -10,12 +10,18 @@ module APIClient
     REQUEST_PARAMS = {
       order_by: 'publication_time',
       schedule: 'remote',
-      page: '1',
-      per_page: '1'
-      # date_from: (DateTime.now - 1 / 24.0).to_s
+      period: 1,
+      page: 1,
+      per_page: 1
     }.freeze
 
-    MAX_MESSAGE_LENGTH = 1000
+    CURRENCIES = {
+      'RUR' => 'руб.',
+      'BYN' => 'бел. руб.',
+      'UAH' => 'грн.',
+      'USD' => '$',
+      'EUR' => '€'
+    }.freeze
 
     class << self
       def create_job_ad!
@@ -25,7 +31,7 @@ module APIClient
         @payload = vacancy(vacancy_id)
         return nil unless @payload
 
-        format_message
+        formatter.format_message
       end
 
       private
@@ -44,30 +50,17 @@ module APIClient
         response
       end
 
-      def format_message
-        fields = {
-          title: "<b>#{title}</b>\n",
-          company: "<i>#{company}</i>\n",
-          experience: "Опыт: #{experience}\n\n",
-          salary: "<b>#{salary}</b>\n\n",
-          skills: "<b>Ключевые навыки:</b> #{skills}\n\n",
-          link: link.to_s,
-          newline: "\n\n"
-        }
-
-        fields_length = fields.values.join.length
-        fields[:description] = description(MAX_MESSAGE_LENGTH - fields_length)
-
-        fields.values_at(:title, :company, :experience, :salary, :description,
-                         :newline, :skills, :link).join
-      end
-
-      def title
-        @payload['name']
-      end
-
-      def experience
-        @payload['experience']['name']
+      def formatter
+        JobAdFormatter.new(
+          title: @payload['name'],
+          company: company,
+          experience: @payload.dig('experience', 'name'),
+          salary: salary,
+          description: description,
+          skills: key_skills,
+          link: @payload['alternate_url'],
+          published_at: @payload['published_at']
+        )
       end
 
       def salary
@@ -77,9 +70,9 @@ module APIClient
         to = " до #{@payload['salary']['to']}" if @payload.dig('salary', 'to')
         currency = @payload.dig('salary', 'currency')
 
-        return unless from || to
+        return 'з/п не указана' unless from || to
 
-        "#{from}#{to} #{currency}".strip
+        "#{from}#{to} #{CURRENCIES[currency] || currency}".strip
       end
 
       def company
@@ -89,19 +82,12 @@ module APIClient
         [employer_name, city].compact.join ', '
       end
 
-      def description(max_length)
-        description = @payload['description'].gsub(%r{</?[^>]+?>}, '')
-        return description if description.length < max_length
-
-        "#{description[0...max_length - 4]} ..."
+      def description
+        @payload['description']&.gsub(%r{</?[^>]+?>}, '')
       end
 
-      def skills
-        @payload['key_skills'].map { |skill| skill['name'] }.join(', ')
-      end
-
-      def link
-        @payload['alternate_url']
+      def key_skills
+        @payload['key_skills']&.map { |skill| skill['name'] }&.join(', ')
       end
     end
   end

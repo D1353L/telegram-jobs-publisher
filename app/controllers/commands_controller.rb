@@ -6,8 +6,10 @@ class CommandsController < ApplicationController
 
   def publish!(*)
     message = APIClient::HhRu.create_job_ad!
-    TelegramBotDecorator.publish_to_channel(text: message, parse_mode: 'html')
-    respond_with(:message, text: 'New job published') if message
+    return unless message
+
+    TelegramBotDecorator.publish_to_channel(text: message)
+    respond_with(:message, text: 'New job published')
   end
 
   def schedule!(*params)
