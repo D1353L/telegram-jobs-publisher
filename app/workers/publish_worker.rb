@@ -5,10 +5,12 @@ class PublishWorker
 
   def perform(api_client_class_name)
     api_client = Object.const_get api_client_class_name
-    message = api_client.create_job_ad!
+    response = api_client.create_job_ad!
 
-    return unless message
+    logger.warn(response[:error]) if response[:error]
+    logger.debug(response[:info]) if response[:info]
+    return unless response[:message]
 
-    TelegramBotDecorator.publish_to_channel(text: message)
+    TelegramBotDecorator.publish_to_channel(text: response[:message])
   end
 end

@@ -19,15 +19,30 @@ module APIClient
       def create_job_ad!
         query_params = JSON.parse(ENV['HH_RU_VACANCIES_PARAMS'])
         vacancy_id = vacancies(query_params)&.first&.dig('id')
-        return nil unless vacancy_id
+
+        return { error: 'Unable to fetch vacancy id' } unless vacancy_id
+
+        if HhRuRecord.last&.id&.to_s == vacancy_id
+          return { info: 'The last vacancy is already published' }
+        end
+
+        save_id_to_db vacancy_id
 
         @payload = vacancy(vacancy_id)
         return nil unless @payload
 
-        formatter.format_message
+        { message: formatter.format_message }
       end
 
       private
+
+      def save_id_to_db(record_id)
+        if HhRuRecord.last
+          HhRuRecord.last.update(id: record_id)
+        else
+          HhRuRecord.new(id: record_id).save!
+        end
+      end
 
       def vacancies(params)
         response = get('/vacancies', query: params)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'pry'
+require 'active_record'
 require 'dotenv/load'
 require 'telegram/bot'
 require 'sidekiq-scheduler'
@@ -23,4 +23,4 @@ Sidekiq.logger = Telegram::JobsPublisher::LoggersPool.new(
   progname: 'TelegramJobsPublisherWorker'
 )
 
-Sidekiq.logger.each { |logger| logger.level = :info }
+Sidekiq.logger.each { |logger| logger.level = ENV['LOG_LEVEL'] }
