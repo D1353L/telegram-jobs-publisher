@@ -14,6 +14,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    activemodel (6.0.3)
+      activesupport (= 6.0.3)
+    activerecord (6.0.3)
+      activemodel (= 6.0.3)
+      activesupport (= 6.0.3)
     activesupport (6.0.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -54,6 +59,7 @@ GEM
     multi_xml (0.6.0)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -106,8 +112,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   dotenv
   httparty
+  pg
   pry-byebug
   require_all
   sidekiq-scheduler

@@ -5,10 +5,13 @@ class CommandsController < ApplicationController
   ACCEPTED_LOG_LEVEL_VALUES = %w[info error debug].freeze
 
   def publish!(*)
-    message = APIClient::HhRu.create_job_ad!
-    return unless message
+    response = APIClient::HhRu.create_job_ad!
 
-    TelegramBotDecorator.publish_to_channel(text: message)
+    respond_with(:message, text: response[:info]) if response[:info]
+    Telegram.logger.error(response[:error]) if response[:error]
+    return unless response[:message]
+
+    TelegramBotDecorator.publish_to_channel(text: response[:message])
     respond_with(:message, text: 'New job published')
   end
 

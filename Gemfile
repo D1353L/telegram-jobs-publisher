@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 
 ruby '2.7.1'
 
+gem 'activerecord'
+gem 'pg'
 gem 'telegram-bot'
 gem 'thin'
 
