@@ -13,7 +13,7 @@ require_all 'config'
 
 TelegramBotInitializer.perform(
   api_key: ENV['API_KEY'],
-  webhook_url: ENV['WEBHOOK_URL'],
+  webhook_url: "#{ENV['WEBHOOK_URL']}/telegram",
   whitelist: ENV['WHITELIST'],
   log_dir: ENV['LOG_DIR'],
   log_chat_id: ENV['LOG_CHAT_ID'],
@@ -25,6 +25,7 @@ Telegram.logger.info ScheduleService.status
 
 app = Rack::Builder.new do
   use LoggingMiddleware, Telegram.logger
+
   map '/telegram' do
     run Telegram::Bot::Middleware.new(Telegram.bot, CommandsController)
   end

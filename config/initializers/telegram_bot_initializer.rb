@@ -6,7 +6,7 @@ class TelegramBotInitializer
 
     def perform(api_key:, webhook_url:, **options)
       set_up_bot_config api_key, options[:whitelist]
-      set_webhook "#{webhook_url}/telegram"
+      set_webhook webhook_url
 
       @log_dir = options.fetch(:log_dir, '.')
       @log_chat_id = options[:log_chat_id]
