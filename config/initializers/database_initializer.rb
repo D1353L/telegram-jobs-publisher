@@ -3,7 +3,6 @@
 require 'active_record'
 require 'erb'
 require 'pg'
-require 'pry'
 
 APP_ENV = ENV['APP_ENV']&.to_sym || :development
 puts "#{APP_ENV} mode"

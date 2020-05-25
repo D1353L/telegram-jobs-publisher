@@ -22,26 +22,32 @@ module APIClient
 
         return { error: 'Unable to fetch vacancy id' } unless vacancy_id
 
-        if HhRuRecord.last&.id&.to_s == vacancy_id
+        @payload = vacancy(vacancy_id)
+        unless @payload
+          return { error: "Unable to fetch vacancy with id=#{vacancy_id}" }
+        end
+
+        last_record = HhRuRecord.last
+
+        if last_record &&
+           last_record.title == @payload['name'] &&
+           last_record.company_name == employer_name
           return { info: 'The last vacancy is already published' }
         end
 
-        save_id_to_db vacancy_id
-
-        @payload = vacancy(vacancy_id)
-        return nil unless @payload
+        save_to_db
 
         { message: formatter.format_message }
       end
 
       private
 
-      def save_id_to_db(record_id)
-        if HhRuRecord.last
-          HhRuRecord.last.update(id: record_id)
-        else
-          HhRuRecord.new(id: record_id).save!
-        end
+      def save_to_db
+        HhRuRecord.new(
+          id: @payload['id'],
+          title: @payload['name'],
+          company_name: employer_name
+        ).update_last_or_create!
       end
 
       def vacancies(params)
@@ -83,13 +89,17 @@ module APIClient
         "#{from}#{to} #{CURRENCIES[currency] || currency}".strip
       end
 
+      def employer_name
+        @payload.dig('employer', 'name')
+      end
+
       def company
-        employer_name = @payload.dig('employer', 'name')
         city = @payload.dig('address', 'city') || @payload.dig('area', 'name')
 
         [employer_name, city].compact.join ', '
       end
 
+      # Removing all html tags from original description
       def description
         @payload['description']&.gsub(%r{</?[^>]+?>}, '')
       end

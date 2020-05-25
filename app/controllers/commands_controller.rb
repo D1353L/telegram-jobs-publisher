@@ -12,7 +12,7 @@ class CommandsController < ApplicationController
     return unless response[:message]
 
     TelegramBotDecorator.publish_to_channel(text: response[:message])
-    respond_with(:message, text: 'New job published')
+    respond_with(:message, text: 'New vacancy published')
   end
 
   def schedule!(*params)
