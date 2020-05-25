@@ -4,6 +4,8 @@ default: &default
   port: <%= ENV['DB_PORT'] || "5432" %>
   database: <%= ENV['DB_NAME'] || "telegram_jobs_publisher" %>
   encoding: utf8
+  ctype: ru_RU.UTF-8
+  template: template0
   username: <%= ENV['DB_USERNAME'] || "telegram_bot" %>
   password: <%= ENV['DB_PASSWORD'] || "telebot123" %>
   pool: 10

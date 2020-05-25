@@ -9,8 +9,6 @@ require_all 'app'
 require_all 'lib'
 require_all 'config'
 
-Sidekiq::Scheduler.dynamic = true
-
 TelegramBotInitializer.set_up_bot_config(ENV['API_KEY'], nil)
 
 Sidekiq.logger = Telegram::JobsPublisher::LoggersPool.new(
@@ -20,7 +18,7 @@ Sidekiq.logger = Telegram::JobsPublisher::LoggersPool.new(
       "#{ENV['LOG_DIR']}/sidekiq.log"
     )
   },
-  progname: 'TelegramJobsPublisherWorker'
+  progname: 'TelegramJobsPublisherWorkers'
 )
 
 Sidekiq.logger.each { |logger| logger.level = ENV['LOG_LEVEL'] }

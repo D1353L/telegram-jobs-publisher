@@ -27,28 +27,23 @@ module APIClient
           return { error: "Unable to fetch vacancy with id=#{vacancy_id}" }
         end
 
-        last_record = HhRuRecord.last
+        found_record = HhRuRecord.find_by(
+          'LOWER(title)= ? AND LOWER(company_name) = ?',
+          @payload['name'].downcase, employer_name.downcase
+        )
 
-        if last_record &&
-           last_record.title == @payload['name'] &&
-           last_record.company_name == employer_name
-          return { info: 'The last vacancy is already published' }
-        end
+        return { info: 'The vacancy is already published' } if found_record
 
-        save_to_db
+        HhRuRecord.create!(
+          id: @payload['id'],
+          title: @payload['name'],
+          company_name: employer_name
+        )
 
         { message: formatter.format_message }
       end
 
       private
-
-      def save_to_db
-        HhRuRecord.new(
-          id: @payload['id'],
-          title: @payload['name'],
-          company_name: employer_name
-        ).update_last_or_create!
-      end
 
       def vacancies(params)
         response = get('/vacancies', query: params)

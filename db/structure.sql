@@ -32,7 +32,9 @@ CREATE TABLE public.ar_internal_metadata (
 CREATE TABLE public.hh_ru_records (
     id bigint NOT NULL,
     title character varying,
-    company_name character varying
+    company_name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -102,8 +104,6 @@ ALTER TABLE ONLY public.schema_migrations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('1'),
-('2'),
-('3');
+('1');
 
 
