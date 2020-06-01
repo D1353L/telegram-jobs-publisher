@@ -6,7 +6,6 @@ class ApplicationController < Telegram::Bot::UpdatesController
   private
 
   def authorize
-    whitelist = Telegram.bots_config.dig(:default, :whitelist)&.split(',')
     return if !whitelist || whitelist.include?(from[:id].to_s)
 
     Telegram.logger.debug 'Access denied'
@@ -19,5 +18,10 @@ class ApplicationController < Telegram::Bot::UpdatesController
                           "first_name=#{from[:first_name]} "\
                           "last_name=#{from[:last_name]} "\
                           "username=#{from[:username]}"
+  end
+
+  def whitelist
+    @whitelist ||= Telegram.bots_config.dig(:default, :whitelist)
+      &.split(',')&.flatten&.map(&:to_s)
   end
 end

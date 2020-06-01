@@ -13,7 +13,7 @@ module Telegram
 
       def initialize(chat_id:, log_level: :info, message_sender: nil)
         @chat_id = chat_id
-        @chat_log_level = LOG_LEVELS[log_level&.to_sym || :info]
+        @chat_log_level = LOG_LEVELS[log_level&.to_sym] || LOG_LEVELS[:info]
         @message_sender = message_sender
         @formatter = Formatter.new
         super(nil)
@@ -48,7 +48,7 @@ module Telegram
       end
 
       def human_log_level
-        LOG_LEVELS.key(@chat_log_level)
+        LOG_LEVELS.key(@chat_log_level).to_s
       end
 
       private

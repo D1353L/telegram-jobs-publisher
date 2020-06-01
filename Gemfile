@@ -15,4 +15,6 @@ gem 'sidekiq-scheduler'
 gem 'dotenv'
 gem 'require_all'
 
+gem 'rspec'
+
 gem 'pry-byebug'

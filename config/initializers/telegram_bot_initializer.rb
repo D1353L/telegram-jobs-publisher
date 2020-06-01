@@ -34,8 +34,8 @@ class TelegramBotInitializer
         },
         progname: PROGNAME
       )
-      Telegram.instance_variable_set('@logger', logger)
-      Telegram.class.send(:attr_reader, 'logger')
+      Telegram.instance_variable_set(:@logger, logger)
+      Telegram.class.send(:attr_reader, :logger)
     end
 
     def set_webhook(webhook_url)
