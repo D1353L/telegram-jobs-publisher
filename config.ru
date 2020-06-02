@@ -23,6 +23,10 @@ TelegramBotInitializer.perform(
 Telegram.logger.info 'Server is started'
 Telegram.logger.info ScheduleService.status
 
+Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
+  [user, password] == [ENV['SIDEKIQ_USERNAME'], ENV['SIDEKIQ_PASSWORD']]
+end
+
 app = Rack::Builder.new do
   use LoggingMiddleware, Telegram.logger
 
