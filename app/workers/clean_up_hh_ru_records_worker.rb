@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CleanUpDBWorker
+class CleanUpHhRuRecordsWorker
   include Sidekiq::Worker
 
   # Removes all records but leaves last n
@@ -11,8 +11,8 @@ class CleanUpDBWorker
 
     if count > records_to_leave_number
       query.limit(count - records_to_leave_number).destroy_all
-      logger.info 'CleanUpDBWorker: Database was successfully cleaned except '\
-                  "#{records_to_leave_number} last records"
+      logger.info 'CleanUpHhRuRecordsWorker: Database was successfully '\
+                  "cleaned except #{records_to_leave_number} last records"
     end
   end
 end

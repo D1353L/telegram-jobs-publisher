@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Telegram::JobsPublisher::ChatLogger do
-  subject { Telegram::JobsPublisher::ChatLogger }
+  subject { described_class }
   let(:instance) { subject.new(chat_id: 0, message_sender: nil) }
 
   describe '#new' do

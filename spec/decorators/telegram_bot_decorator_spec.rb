@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe TelegramBotDecorator do
-  subject { TelegramBotDecorator }
+  subject { described_class }
 
   describe '#silent_time?' do
     before do

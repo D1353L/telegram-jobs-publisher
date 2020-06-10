@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Telegram::JobsPublisher::LoggersPool do
-  subject { Telegram::JobsPublisher::LoggersPool }
+  subject { described_class }
 
   let(:instance) do
     subject.new(

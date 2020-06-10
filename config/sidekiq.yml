@@ -1,6 +1,6 @@
 :dynamic: true
 :schedule:
   clean_up_db:
-    class: CleanUpDBWorker
+    class: CleanUpHhRuRecordsWorker
     args: 5
     every: '24h'

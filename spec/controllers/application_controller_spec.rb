@@ -1,21 +1,11 @@
 # frozen_string_literal: true
 
+require_relative './shared_bot_config.rb'
+
 describe ApplicationController, telegram_bot: :rack do
-  subject { ApplicationController.new }
+  include_context 'shared bot config'
 
-  let(:logger) do
-    instance_double('LoggersPool', debug: true, info: true, error: true)
-  end
-
-  before do
-    Telegram.instance_variable_set(:@logger, logger)
-    Telegram.class.send(:attr_reader, :logger)
-  end
-
-  after do
-    Telegram.remove_instance_variable(:@logger)
-    Telegram.bots_config = nil
-  end
+  subject { described_class.new }
 
   describe '#authorize' do
     context 'whitelist is empty' do

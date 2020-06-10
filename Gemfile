@@ -15,6 +15,14 @@ gem 'sidekiq-scheduler'
 gem 'dotenv'
 gem 'require_all'
 
-gem 'rspec'
+group :development, :test do
+  gem 'pry-byebug'
+end
 
-gem 'pry-byebug'
+group :test do
+  gem 'database_cleaner-active_record'
+  gem 'ffaker'
+  gem 'rspec'
+  gem 'simplecov', require: false
+  gem 'webmock'
+end

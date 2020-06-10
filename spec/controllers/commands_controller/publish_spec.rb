@@ -1,39 +1,14 @@
 # frozen_string_literal: true
 
+require_relative '../shared_bot_config.rb'
+
 describe 'CommandsController#publish!', telegram_bot: :rack do
-  subject { CommandsController.new }
+  include_context 'shared bot config'
 
-  let(:request_path) { '/telegram' }
-  let(:bot) { Telegram::Bot::ClientStub.new('TestBot') }
-
-  let(:app) do
-    path = request_path
-    bot_app = Telegram::Bot::Middleware.new(bot, CommandsController)
-    app = Rack::Builder.new do
-      map(path) { run bot_app }
-      run ->(env) { raise "Route is not mapped: #{env['PATH_INFO']}" }
-    end
-    if ActionPack::VERSION::MAJOR >= 5
-      app
-    else
-      require 'action_dispatch/middleware/params_parser'
-      ActionDispatch::ParamsParser.new(app)
-    end
-  end
-
-  let(:logger) do
-    instance_double('LoggersPool', debug: true, info: true, error: true)
-  end
+  subject { described_class.new }
 
   before do
-    Telegram.instance_variable_set(:@logger, logger)
-    Telegram.class.send(:attr_reader, :logger)
-
     allow(APIClient::HhRu).to receive(:create_job_ad!).and_return({})
-  end
-
-  after do
-    Telegram.remove_instance_variable(:@logger)
   end
 
   it 'calls APIClient::HhRu.create_job_ad!' do

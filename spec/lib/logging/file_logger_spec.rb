@@ -3,7 +3,7 @@
 require 'fileutils'
 
 describe Telegram::JobsPublisher::FileLogger do
-  subject { Telegram::JobsPublisher::FileLogger }
+  subject { described_class }
   let(:path_with_dir) { 'test_dir/test1.log' }
   let(:path_root_dir) { 'test2.log' }
 
