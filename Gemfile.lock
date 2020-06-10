@@ -84,6 +84,7 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
+    rake (13.0.1)
     redis (4.1.4)
     require_all (3.0.0)
     rspec (3.9.0)
@@ -143,6 +144,7 @@ DEPENDENCIES
   httparty
   pg
   pry-byebug
+  rake
   require_all
   rspec
   sidekiq-scheduler
