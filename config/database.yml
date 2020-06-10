@@ -22,7 +22,4 @@ test:
   database: telegram_jobs_publisher_test
 
 production:
-  <<: *default
-  database: telegram_jobs_publisher_production
-  username: bot
-  password: <%= ENV['BOT_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
