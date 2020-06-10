@@ -1,0 +1,141 @@
+{
+  "id": "35860685",
+  "premium": false,
+  "billing_type": {
+    "id": "standard_plus",
+    "name": "Стандарт плюс"
+  },
+  "relations": [],
+  "name": "Комьюнити-менеджер сообществ ВКонтакте",
+  "insider_interview": null,
+  "response_letter_required": false,
+  "area": {
+    "id": "53",
+    "name": "Краснодар",
+    "url": "https://api.hh.ru/areas/53"
+  },
+  "salary": {
+    "from": 20000,
+    "to": 30000,
+    "currency": "RUR",
+    "gross": false
+  },
+  "type": {
+    "id": "open",
+    "name": "Открытая"
+  },
+  "address": null,
+  "allow_messages": true,
+  "site": {
+    "id": "hh",
+    "name": "hh.ru"
+  },
+  "experience": {
+    "id": "between1And3",
+    "name": "От 1 года до 3 лет"
+  },
+  "schedule": {
+    "id": "remote",
+    "name": "Удаленная работа"
+  },
+  "employment": {
+    "id": "full",
+    "name": "Полная занятость"
+  },
+  "department": null,
+  "contacts": null,
+  "description": "<p><strong>Хочешь узнать, как работает сеть сообществ на 45 млн человек? Студия интернет-маркетинга Mevix ищет комьюнити-менеджера!</strong></p> <p><strong>Твои задачи:</strong></p> <ul> <li>поддерживать дружелюбную атмосферу в сообществе;</li> <li>своевременно следить за комментариями и отвечать на них;</li> <li>общаться с подписчиками так, как этого требует ситуация;</li> <li>вовлекать подписчиков в активность;</li> <li>адекватно реагировать на негатив;</li> <li>бороться со спамом в комментариях;</li> <li>изучать аудиторию;</li> <li>анализировать статистику;</li> <li>быть в курсе событий.</li> </ul> <p><strong>Эта вакансия для тебя, если:</strong></p> <ul> <li>грамотно говоришь и пишешь;</li> <li>имеешь широкий кругозор на разные темы;</li> <li>умеешь шутить;</li> <li>деликатен в общении;</li> <li>можешь быть справедливым судьей в горячих спорах;</li> <li>ты не лезешь за словом в карман и можешь много общаться. Очень много!;</li> <li>умеешь сопереживать и находить индивидуальный подход к человеку.</li> </ul> <p>Ты будешь общаться с разными людьми в миллионных тематических сообществах и узнаешь, как все устроено. Тебе предстоит вовлекать людей в общение, создавать бурю в комментариях, разнимать яростных спорщиков и подключать к беседе самых стеснительных. <strong>Миллионные группы будут говорить твоими словами.</strong> У тебя будет много возможностей и столько же ответственности.</p> <p><strong>Мы предлагаем:</strong></p> <ul> <li>удаленную работу с полным рабочим днем;</li> <li>стабильную зарплату;</li> <li>дружную команду профессионалов (и новичков, которые хотят стать профессионалами);</li> <li>оплачиваемый отпуск;</li> <li>рабочее место в нашем уютном офисе в Петербурге на время оплачиваемых командировок.</li> </ul> <p>Вовлекай и властвуй вместе с нами!</p> <p><strong>Внимание! Мы предлагаем зарплату от 20 до 30 тысяч рублей в месяц в зависимости от ваших навыков и результатов.</strong></p>",
+  "branded_description": null,
+  "vacancy_constructor_template": null,
+  "key_skills": [{
+      "name": "SMM"
+    },
+    {
+      "name": "Наполнение контентом"
+    },
+    {
+      "name": "Написание текстов"
+    },
+    {
+      "name": "Копирайтинг"
+    },
+    {
+      "name": "Креативность"
+    },
+    {
+      "name": "Грамотность"
+    },
+    {
+      "name": "понимание потребностей аудитории"
+    }
+  ],
+  "accept_handicapped": false,
+  "accept_kids": false,
+  "archived": false,
+  "response_url": null,
+  "specializations": [{
+      "id": "1.116",
+      "name": "Контент",
+      "profarea_id": "1",
+      "profarea_name": "Информационные технологии, интернет, телеком"
+    },
+    {
+      "id": "1.137",
+      "name": "Маркетинг",
+      "profarea_id": "1",
+      "profarea_name": "Информационные технологии, интернет, телеком"
+    },
+    {
+      "id": "11.134",
+      "name": "Литературная, Редакторская деятельность",
+      "profarea_id": "11",
+      "profarea_name": "Искусство, развлечения, масс-медиа"
+    },
+    {
+      "id": "11.71",
+      "name": "Журналистика",
+      "profarea_id": "11",
+      "profarea_name": "Искусство, развлечения, масс-медиа"
+    },
+    {
+      "id": "3.119",
+      "name": "Копирайтер",
+      "profarea_id": "3",
+      "profarea_name": "Маркетинг, реклама, PR"
+    },
+    {
+      "id": "3.90",
+      "name": "Интернет-маркетинг",
+      "profarea_id": "3",
+      "profarea_name": "Маркетинг, реклама, PR"
+    }
+  ],
+  "code": null,
+  "hidden": false,
+  "quick_responses_allowed": false,
+  "driver_license_types": [],
+  "accept_incomplete_resumes": false,
+  "employer": {
+    "id": "1461362",
+    "name": "Мевикс",
+    "url": "https://api.hh.ru/employers/1461362",
+    "alternate_url": "https://hh.ru/employer/1461362",
+    "logo_urls": {
+      "240": "https://hhcdn.ru/employer-logo/1536187.png",
+      "90": "https://hhcdn.ru/employer-logo/1536186.png",
+      "original": "https://hhcdn.ru/employer-logo-original/273414.png"
+    },
+    "vacancies_url": "https://api.hh.ru/vacancies?employer_id=1461362",
+    "trusted": true
+  },
+  "published_at": "2020-06-10T21:55:48+0300",
+  "created_at": "2020-06-10T21:55:48+0300",
+  "negotiations_url": null,
+  "suitable_resumes_url": null,
+  "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=35860685",
+  "has_test": true,
+  "test": {
+    "required": true
+  },
+  "alternate_url": "https://hh.ru/vacancy/35860685"
+}

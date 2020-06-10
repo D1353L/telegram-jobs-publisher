@@ -4,8 +4,8 @@ require 'active_record'
 require 'erb'
 require 'pg'
 
-APP_ENV = ENV['APP_ENV']&.to_sym || :development
-puts "#{APP_ENV} mode"
+RACK_ENV = ENV['RACK_ENV']&.to_sym || :development
+puts "#{RACK_ENV} mode"
 
 ActiveRecord::Base.logger = Telegram::JobsPublisher::LoggersPool.new(
   loggers: {
@@ -26,4 +26,4 @@ DB_CONF = YAML.safe_load(
 
 ActiveRecord::Base.schema_format = :sql
 ActiveRecord::Base.configurations = DB_CONF
-ActiveRecord::Base.establish_connection(DB_CONF.fetch(APP_ENV.to_s))
+ActiveRecord::Base.establish_connection(DB_CONF.fetch(RACK_ENV.to_s))

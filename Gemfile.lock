@@ -32,12 +32,19 @@ GEM
     connection_pool (2.2.2)
     crass (1.0.6)
     daemons (1.3.1)
+    database_cleaner (1.8.5)
+    database_cleaner-active_record (1.8.0)
+      activerecord
+      database_cleaner (~> 1.8.0)
+    diff-lcs (1.3)
+    docile (1.3.2)
     dotenv (2.7.5)
     e2mmap (0.1.0)
     erubi (1.9.0)
     et-orbi (1.2.4)
       tzinfo
     eventmachine (1.2.7)
+    ffaker (2.15.0)
     fugit (1.3.5)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.1)
@@ -79,6 +86,19 @@ GEM
       loofah (~> 2.3)
     redis (4.1.4)
     require_all (3.0.0)
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+    rspec-core (3.9.2)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.3)
     rufus-scheduler (3.6.0)
       fugit (~> 1.1, >= 1.1.6)
     sidekiq (6.0.7)
@@ -93,6 +113,10 @@ GEM
       sidekiq (>= 3)
       thwait
       tilt (>= 1.4.0)
+    simplecov (0.18.5)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     telegram-bot (0.14.4)
       actionpack (>= 4.0, < 6.1)
       activesupport (>= 4.0, < 6.1)
@@ -113,12 +137,16 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  database_cleaner-active_record
   dotenv
+  ffaker
   httparty
   pg
   pry-byebug
   require_all
+  rspec
   sidekiq-scheduler
+  simplecov
   telegram-bot
   thin
 
