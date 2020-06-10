@@ -23,3 +23,6 @@ test:
 
 production:
   <<: *default
+  database: telegram_jobs_publisher_production
+  username: bot
+  password: <%= ENV['BOT_DATABASE_PASSWORD'] %>
