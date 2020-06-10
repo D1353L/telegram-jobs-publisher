@@ -1,3 +1,3 @@
-bot: ruby config.ru
+web: ruby config.ru
 
 worker: bundle exec sidekiq -r ./config/sidekiq_boot.rb -c 9
