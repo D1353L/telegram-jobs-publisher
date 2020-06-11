@@ -6,7 +6,7 @@ describe PublishWorker do
   before do
     allow(TelegramBotDecorator).to receive(:publish_to_channel)
     allow(subject.logger).to receive(:warn)
-    allow(subject.logger).to receive(:debug)
+    allow(subject.logger).to receive(:info)
   end
 
   context '#perform' do
@@ -19,18 +19,18 @@ describe PublishWorker do
 
       expect(subject.logger).to have_received(:warn).with(error)
 
-      expect(subject.logger).to_not have_received(:debug)
+      expect(subject.logger).to_not have_received(:info)
       expect(TelegramBotDecorator).to_not have_received(:publish_to_channel)
     end
 
-    it 'logs info as debug if response contains info' do
+    it 'logs info if response contains info' do
       info = 'inf'
       allow(APIClient::HhRu).to receive(:create_job_ad!)
         .and_return({ info: info })
 
       subject.perform('APIClient::HhRu')
 
-      expect(subject.logger).to have_received(:debug).with(info)
+      expect(subject.logger).to have_received(:info).with(info)
 
       expect(subject.logger).to_not have_received(:warn)
       expect(TelegramBotDecorator).to_not have_received(:publish_to_channel)
@@ -46,7 +46,8 @@ describe PublishWorker do
       expect(TelegramBotDecorator).to have_received(:publish_to_channel)
         .with({ text: message })
 
-      expect(subject.logger).to_not have_received(:debug)
+      expect(subject.logger).to have_received(:info)
+        .with('New vacancy published to channel')
       expect(subject.logger).to_not have_received(:warn)
     end
 
@@ -63,7 +64,7 @@ describe PublishWorker do
 
       expect(TelegramBotDecorator).to have_received(:publish_to_channel)
         .with({ text: response[:message] })
-      expect(subject.logger).to have_received(:debug).with(response[:info])
+      expect(subject.logger).to have_received(:info).with(response[:info])
       expect(subject.logger).to have_received(:warn).with(response[:error])
     end
   end
