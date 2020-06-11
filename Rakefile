@@ -24,3 +24,4 @@ end
 
 # Use Rails 6 migrations
 load 'active_record/railties/databases.rake'
+load 'lib/tasks/dyno_ping.rake'
