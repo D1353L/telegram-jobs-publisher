@@ -22,3 +22,7 @@ Sidekiq.logger = Telegram::JobsPublisher::LoggersPool.new(
 )
 
 Sidekiq.logger.each { |logger| logger.level = ENV['LOG_LEVEL'] }
+
+if ENV['DEFAULT_SCHEDULE_VALUE']
+  ScheduleService.schedule!(ENV['DEFAULT_SCHEDULE_VALUE'])
+end

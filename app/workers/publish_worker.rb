@@ -8,9 +8,11 @@ class PublishWorker
     response = api_client.create_job_ad!
 
     logger.warn(response[:error]) if response[:error]
-    logger.debug(response[:info]) if response[:info]
+    logger.info(response[:info]) if response[:info]
     return unless response[:message]
 
     TelegramBotDecorator.publish_to_channel(text: response[:message])
+    
+    logger.info('New vacancy published to channel')
   end
 end

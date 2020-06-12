@@ -14,6 +14,7 @@ gem 'sidekiq-scheduler'
 
 gem 'dotenv'
 gem 'require_all'
+gem 'rake'
 
 group :development, :test do
   gem 'pry-byebug'

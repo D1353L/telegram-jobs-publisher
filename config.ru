@@ -39,4 +39,4 @@ app = Rack::Builder.new do
   end
 end
 
-CustomThinHandler.run app
+CustomThinHandler.run(app, {Port: ENV['PORT']})
