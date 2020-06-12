@@ -35,6 +35,10 @@ module APIClient
 
         return { info: 'The vacancy is already published' } if found_record
 
+        if query_params['specialization'] == 1 && !it_vacancy?
+          return { info: "Filtered not IT vacancy with id=#{vacancy_id}" }
+        end
+
         HhRuRecord.create!(
           id: @payload['id'],
           title: @payload['name'],
@@ -58,6 +62,15 @@ module APIClient
         return nil if response.code != 200
 
         response
+      end
+
+      def it_vacancy?
+        it_specs = @payload['specializations'].select do |spec|
+          spec['profarea_id'] == '1' &&
+            !%w[Продажи Контент Маркетинг].include?(spec['name'])
+        end
+
+        it_specs.any?
       end
 
       def formatter

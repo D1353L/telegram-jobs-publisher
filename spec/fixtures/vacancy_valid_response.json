@@ -74,6 +74,12 @@
   "archived": false,
   "response_url": null,
   "specializations": [{
+      "id": "1.225",
+      "name": "Продажи",
+      "profarea_id": "1",
+      "profarea_name": "Информационные технологии, интернет, телеком"
+    },
+    {
       "id": "1.116",
       "name": "Контент",
       "profarea_id": "1",
