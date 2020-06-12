@@ -10,6 +10,7 @@ module APIClient
     CURRENCIES = {
       'RUR' => 'руб.',
       'BYN' => 'бел. руб.',
+      'BYR' => 'бел. руб.',
       'UAH' => 'грн.',
       'USD' => '$',
       'EUR' => '€'
