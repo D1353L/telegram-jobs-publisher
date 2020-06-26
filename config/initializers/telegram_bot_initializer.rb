@@ -8,7 +8,7 @@ class TelegramBotInitializer
       set_up_bot_config api_key, options[:whitelist]
       set_webhook webhook_url
 
-      @log_dir = options.fetch(:log_dir, '.')
+      @log_dir = options[:log_dir]
       @log_chat_id = options[:log_chat_id]
       @chat_log_level = options.fetch(:chat_log_level, 'info')
       connect_loggers
@@ -29,11 +29,12 @@ class TelegramBotInitializer
       logger = Telegram::JobsPublisher::LoggersPool.new(
         loggers: {
           stdout_logger: Logger.new($stdout),
-          file_logger: file_logger,
           chat_logger: chat_logger
         },
         progname: PROGNAME
       )
+      logger[:file_logger] = file_logger if @log_dir
+
       Telegram.instance_variable_set(:@logger, logger)
       Telegram.class.send(:attr_reader, :logger)
     end

@@ -9,13 +9,16 @@ puts "#{RACK_ENV} mode"
 
 ActiveRecord::Base.logger = Telegram::JobsPublisher::LoggersPool.new(
   loggers: {
-    stdout_logger: Logger.new($stdout),
-    file_logger: Telegram::JobsPublisher::FileLogger.new(
-      "#{ENV['LOG_DIR']}/telegram_jobs_publisher.log"
-    )
+    stdout_logger: Logger.new($stdout)
   },
   progname: 'TelegramJobsPublisherDB'
 )
+
+if ENV['LOG_DIR']
+  ActiveRecord::Base.logger[:file_logger] = Telegram::JobsPublisher::FileLogger.new(
+    "#{ENV['LOG_DIR']}/telegram_jobs_publisher.log"
+  )
+end
 
 ActiveRecord::Base.logger.each { |logger| logger.level = ENV['LOG_LEVEL'] }
 

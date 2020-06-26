@@ -50,6 +50,8 @@ describe 'CommandsController#schedule!', telegram_bot: :rack do
         default_value = '1h'
         ENV['DEFAULT_SCHEDULE_VALUE'] = default_value
         allow(ScheduleService).to receive(:schedule!).with(default_value)
+        allow(Sidekiq).to receive(:get_schedule)
+          .and_return({ every: default_value })
 
         dispatch_command(:schedule)
 
