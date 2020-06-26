@@ -7,7 +7,7 @@ require 'sidekiq-scheduler'
 require 'require_all'
 require_all 'app'
 require_all 'lib'
-require_all 'config'
+require_all 'config/initializers'
 
 TelegramBotInitializer.set_up_bot_config(ENV['API_KEY'], nil)
 

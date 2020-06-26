@@ -12,6 +12,20 @@ describe APIClient::HhRu do
     JSON.parse(File.read('spec/fixtures/vacancy_valid_response.json'))
   end
 
+  before do
+    ENV['HH_RU_VACANCIES_PARAMS'] = {
+      order_by: 'publication_time',
+      schedule: 'remote',
+      period: 1,
+      page: 1,
+      per_page: 1,
+    }.to_json
+  end
+
+  after do
+    ENV.delete('HH_RU_VACANCIES_PARAMS')
+  end
+
   describe '#create_job_ad!' do
     context 'processing errors' do
       context 'got error on getting vacancies' do
@@ -76,7 +90,7 @@ describe APIClient::HhRu do
 
     context 'processing when vacancy is new' do
       let(:formatted_vacancy) { File.read('spec/fixtures/formatted_vacancy.txt') }
-      
+
       before do
         allow(subject).to receive(:get)
           .with('/vacancies', query: JSON.parse(ENV['HH_RU_VACANCIES_PARAMS']))
