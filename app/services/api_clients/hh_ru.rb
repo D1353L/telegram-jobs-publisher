@@ -24,9 +24,7 @@ module APIClient
         return { error: 'Unable to fetch vacancy id' } unless vacancy_id
 
         @payload = vacancy(vacancy_id)
-        unless @payload
-          return { error: "Unable to fetch vacancy with id=#{vacancy_id}" }
-        end
+        return { error: "Unable to fetch vacancy with id=#{vacancy_id}" } unless @payload
 
         found_record = HhRuRecord.find_by(
           'LOWER(title)= ? AND LOWER(company_name) = ?',
@@ -74,9 +72,7 @@ module APIClient
       end
 
       def salary
-        if @payload.dig('salary', 'from')
-          from = "от #{@payload['salary']['from']}"
-        end
+        from = "от #{@payload['salary']['from']}" if @payload.dig('salary', 'from')
         to = " до #{@payload['salary']['to']}" if @payload.dig('salary', 'to')
         currency = @payload.dig('salary', 'currency')
 
@@ -95,9 +91,8 @@ module APIClient
         [employer_name, city].compact.join ', '
       end
 
-      # Removing all html tags from original description
       def description
-        @payload['description']&.gsub(%r{</?[^>]+?>}, '')
+        APIClient::Helper.sanitize_html(@payload['description'])
       end
 
       def key_skills

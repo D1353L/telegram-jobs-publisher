@@ -10,6 +10,7 @@ gem 'telegram-bot'
 gem 'thin'
 
 gem 'httparty'
+gem 'rss'
 gem 'sidekiq-scheduler'
 
 gem 'dotenv'

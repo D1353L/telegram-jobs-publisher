@@ -93,6 +93,7 @@ GEM
     rake (13.0.1)
     redis (4.1.4)
     require_all (3.0.0)
+    rexml (3.2.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -106,6 +107,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.3)
+    rss (0.2.9)
+      rexml
     rufus-scheduler (3.6.0)
       fugit (~> 1.1, >= 1.1.6)
     safe_yaml (1.0.5)
@@ -158,6 +161,7 @@ DEPENDENCIES
   rake
   require_all
   rspec
+  rss
   sidekiq-scheduler
   simplecov
   telegram-bot

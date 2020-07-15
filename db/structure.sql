@@ -11,7 +11,7 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
@@ -23,6 +23,38 @@ CREATE TABLE public.ar_internal_metadata (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: dou_ua_records; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.dou_ua_records (
+    id bigint NOT NULL,
+    title character varying,
+    company_name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: dou_ua_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.dou_ua_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: dou_ua_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.dou_ua_records_id_seq OWNED BY public.dou_ua_records.id;
 
 
 --
@@ -67,6 +99,13 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: dou_ua_records id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dou_ua_records ALTER COLUMN id SET DEFAULT nextval('public.dou_ua_records_id_seq'::regclass);
+
+
+--
 -- Name: hh_ru_records id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -79,6 +118,14 @@ ALTER TABLE ONLY public.hh_ru_records ALTER COLUMN id SET DEFAULT nextval('publi
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: dou_ua_records dou_ua_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dou_ua_records
+    ADD CONSTRAINT dou_ua_records_pkey PRIMARY KEY (id);
 
 
 --
@@ -104,6 +151,7 @@ ALTER TABLE ONLY public.schema_migrations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('1');
+('1'),
+('2');
 
 

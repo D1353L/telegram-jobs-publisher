@@ -28,7 +28,7 @@ class JobAdFormatter
     {
       title: "<b>#{@title}</b>\n",
       company: "<i>#{@company}</i>\n",
-      experience: "Опыт: #{@experience}\n\n",
+      experience: experience,
       salary: "<b>#{@salary}</b>\n\n",
       skills: skills,
       link: "#{@link}\n\n",
@@ -41,11 +41,17 @@ class JobAdFormatter
     @description.truncate(@max_description_length, separator: '.', omission: ' ...')
   end
 
+  def experience
+    "Опыт: #{@experience}\n\n" if @experience
+  end
+
   def skills
     "<b>Ключевые навыки:</b> #{@skills}\n\n" if @skills && !@skills.empty?
   end
 
   def published_at
-    DateTime.parse(@published_at).strftime('%d/%m/%Y %H:%M')
+    dt = @published_at.is_a?(String) ? DateTime.parse(@published_at) : @published_at
+
+    dt.strftime('%d/%m/%Y %H:%M')
   end
 end
