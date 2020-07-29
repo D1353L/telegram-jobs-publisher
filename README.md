@@ -1,5 +1,5 @@
 # telegram-jobs-publisher
-The application to publish last vacancies from different services to Telegram-channel.
+The application for publishing last vacancies from different services to Telegram-channel.
 
 # Setup and run
 This is not a Rails app, just Rack.
